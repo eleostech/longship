@@ -36,7 +36,7 @@ erl -boot start_sasl -s crypto -sname littlebean -setcookie cookie
 Then, from the Erlang shell:
 
 ```erlang
-> Node = {messagebox, 'horsesaredelicious@localhost')}.
+> Node = {messagebox, 'horsesaredelicious@localhost'}.
 > Node ! {self(), greet, "Sir Moosemeat McStanley, Keeper of the Badger-Knights of Hamramnon"}.
 {<0.49.0>,greet,"Sir Moosemeat McStanley, Keeper of the Badger-Knights of Hamramnon"}
 > receive MyGreeting -> MyGreeting end.
