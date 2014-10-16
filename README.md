@@ -1,12 +1,12 @@
 # longship
 
-A little library designed make it easier to work with the Erlang/OTP JInterface in Clojure.
+A little library designed make it easier to work with the Erlang/OTP [JInterface](http://www.erlang.org/doc/apps/jinterface/jinterface_users_guide.html) in Clojure.
 
 ## Usage
 
 ### A silly example
 
-First, start EPDM:
+First, start the Erlang port mapper daemon, so the two nodes can find each other:
 
 ```bash
 epmd -d
@@ -27,7 +27,7 @@ Then, in a REPL:
 (longship.server/start-server "horsesaredelicious@localhost" "messagebox" "cookie")
 ```
 
-Then, start an erlang node with the same cookie:
+Then, start an Erlang node with the same cookie:
 
 ```bash
 erl -boot start_sasl -s crypto -sname littlebean -setcookie cookie
@@ -36,7 +36,7 @@ erl -boot start_sasl -s crypto -sname littlebean -setcookie cookie
 Then, from the Erlang shell:
 
 ```erlang
-> Node = {messagebox, list_to_atom("horsesaredelicious@localhost")}.
+> Node = {messagebox, 'horsesaredelicious@localhost')}.
 > Node ! {self(), greet, "Sir Moosemeat McStanley, Keeper of the Badger-Knights of Hamramnon"}.
 {<0.49.0>,greet,"Sir Moosemeat McStanley, Keeper of the Badger-Knights of Hamramnon"}
 > receive MyGreeting -> MyGreeting end.
