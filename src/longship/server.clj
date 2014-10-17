@@ -1,5 +1,5 @@
 (ns longship.server
-  (:use [longship.otp :only [encode decode tuple]])
+  (:use [longship.data :only [encode decode tuple]])
   (:require [clojure.tools.logging :as log])
   (:import [com.ericsson.otp.erlang
             OtpErlangDecodeException

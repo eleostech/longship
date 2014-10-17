@@ -1,4 +1,4 @@
-(ns longship.otp
+(ns longship.data
   "Primary Erlang/OTP translation namespace"
   (:import [com.ericsson.otp.erlang
             OtpErlangAtom
@@ -32,37 +32,48 @@
 (extend clojure.lang.Keyword
   Clojure->OTP
   {:encode (fn [this]
-           (OtpErlangAtom. (name this)))})
+             (OtpErlangAtom. (name this)))})
 
 (extend clojure.lang.Symbol
   Clojure->OTP
   {:encode (fn [this]
-           (OtpErlangAtom. (name this)))})
+             (OtpErlangAtom. (name this)))})
 
 (extend String
   Clojure->OTP
   {:encode (fn [this]
-           (OtpErlangString. this))})
+             (OtpErlangString. this))})
 
 (extend Double
   Clojure->OTP
   {:encode (fn [this]
-           (OtpErlangDouble. this))})
+             (OtpErlangDouble. this))})
 
 (extend clojure.lang.PersistentVector
   Clojure->OTP
   {:encode (fn [this]
-           (OtpErlangList. (into-array OtpErlangObject (map encode this))))})
+             (OtpErlangList. (into-array OtpErlangObject (map encode this))))})
 
 (extend Long
   Clojure->OTP
   {:encode (fn [this]
-           (OtpErlangLong. this))})
+             (OtpErlangLong. this))})
 
 (extend Boolean
   Clojure->OTP
   {:encode (fn [this]
-           (OtpErlangAtom. this))})
+             (OtpErlangAtom. this))})
+
+(extend clojure.lang.IPersistentMap
+  Clojure->OTP
+  {:encode (fn [this]
+             (OtpErlangList.
+              (into-array
+               OtpErlangObject
+               (map
+                (fn [[k v]]
+                  (encode (tuple k v)))
+                this))))})
 
 ;; Implementations for converting Erlang objects into Clojure/Java objects
 
@@ -77,33 +88,33 @@
 (extend OtpErlangBinary
   OTP->Clojure
   {:decode (fn [self]
-                 (.binaryValue self))})
+             (.binaryValue self))})
 
 (extend OtpErlangTuple
   OTP->Clojure
   {:decode (fn [self]
-                 (Tuple. (map decode (.elements self))
-                         (.arity self)))})
+             (Tuple. (map decode (.elements self))
+                     (.arity self)))})
 
 (extend OtpErlangDouble
   OTP->Clojure
   {:decode (fn [self]
-                 (.doubleValue self))})
+             (.doubleValue self))})
 
 (extend OtpErlangList
   OTP->Clojure
   {:decode (fn [self]
-                 (vec (map decode (.elements self))))})
+             (vec (map decode (.elements self))))})
 
 (extend OtpErlangLong
   OTP->Clojure
   {:decode (fn [self]
-                 (.longValue self))})
+             (.longValue self))})
 
 (extend OtpErlangString
   OTP->Clojure
   {:decode (fn [self]
-                 (.stringValue self))})
+             (.stringValue self))})
 
 (extend OtpErlangPid
   OTP->Clojure
