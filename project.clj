@@ -1,4 +1,4 @@
-(defproject longship "1.0.0-SNAPSHOT"
+(defproject eleos/longship "1.0.0-SNAPSHOT"
   :description "Erlang/OTP tools for Clojure"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
