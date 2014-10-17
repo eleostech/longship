@@ -14,9 +14,6 @@
      [mtype# ~@bindings]
      ~@body))
 
-; (defhandler ping []
-;    :pong)
-
 (defn receive [mbox]
   (try
     (let [o (.receive mbox)]
