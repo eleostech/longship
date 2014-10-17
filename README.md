@@ -49,7 +49,7 @@ Then, from the Erlang shell:
 
 ## License
 
-Copyright © 2014 Ryan Crum
+Copyright © 2014 Eleos Technologies, LLC
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
