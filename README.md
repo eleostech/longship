@@ -16,7 +16,7 @@ Then, in a REPL:
 
 ```clojure
 (require 'longship.server)
-(use '[longship.otp :only [tuple]])
+(use '[longship.data :only [tuple]])
 
 (longship.server/defhandler greet [name]
   (str "What ho, " name "!"))
@@ -30,7 +30,7 @@ Then, in a REPL:
 Then, start an Erlang node with the same cookie:
 
 ```bash
-erl -boot start_sasl -s crypto -sname littlebean -setcookie cookie
+erl -boot start_sasl -s crypto -sname earl -setcookie cookie
 ```
 
 Then, from the Erlang shell:
