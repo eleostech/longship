@@ -39,7 +39,7 @@
       :shutdown nil
       (let [[pid message-type & vals] (:elements msg)]
         (try
-          (log/info "Received" message-type "message with params" vals "from" pid)
+          (log/debug "Received" message-type "message with params" vals "from" pid)
           (! mbox pid (apply handle (cons message-type vals)))
           (catch Exception ex
             (.printStackTrace ex)
