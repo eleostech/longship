@@ -45,8 +45,8 @@
             (try
               (! mbox pid (tuple :error (.getMessage ex)))
               (catch Exception ex
-                (log/error ex "Unable to send error tuple; ignoring message"))))))
-      (recur mbox))))
+                (log/error ex "Unable to send error tuple; ignoring message")))))
+        (recur mbox)))))
 
 (defn start-server [node-name message-box-name cookie]
   (receive-loop (.createMbox (OtpNode. node-name cookie) message-box-name)))
