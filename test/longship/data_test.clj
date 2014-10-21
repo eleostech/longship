@@ -58,3 +58,11 @@
                         (into-array OtpErlangObject
                                     [(OtpErlangAtom. "those")
                                      (OtpErlangString. "hamsters")]))])))))
+
+(deftest lazy-seq-test
+  (is (= (encode (take 3 (repeat "bean")))
+         (OtpErlangList.
+          (into-array OtpErlangObject
+                      [(OtpErlangString. "bean")
+                       (OtpErlangString. "bean")
+                       (OtpErlangString. "bean")])))))

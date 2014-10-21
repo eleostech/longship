@@ -71,6 +71,13 @@
   Clojure->OTP
   {:encode (fn [this] (new OtpErlangAtom "undefined"))})
 
+(extend clojure.lang.LazySeq
+  Clojure->OTP
+  {:encode #(new OtpErlangList
+                 (into-array
+                  OtpErlangObject
+                  (map encode %)))})
+
 ;; Implementations for converting Erlang objects into Clojure/Java objects
 
 (extend OtpErlangAtom
