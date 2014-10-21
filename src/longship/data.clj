@@ -67,15 +67,20 @@
                      (encode (tuple k v)))
                    %)))})
 
+(extend nil
+  Clojure->OTP
+  {:encode (fn [this] (new OtpErlangAtom "undefined"))})
+
 ;; Implementations for converting Erlang objects into Clojure/Java objects
 
 (extend OtpErlangAtom
   OTP->Clojure
   {:decode (fn [this]
              (let [value (.atomValue this)]
-               (if (or (= "true" value) (= "false" value))
-                 (.booleanValue this)
-                 (keyword value))))})
+               (cond
+                (or (= "true" value) (= "false" value)) (.booleanValue this)
+                 (or (= "undefined" value) (= "null" value)) nil
+                 :else (keyword value))))})
 
 (extend OtpErlangBinary
   OTP->Clojure

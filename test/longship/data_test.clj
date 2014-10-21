@@ -13,7 +13,9 @@
             OtpErlangTuple]))
 
 (deftest tuple-test
-  (let [clj-tuple (tuple :i "have" 9 :small "hamsters" [:in "a cage" (tuple :on :the "porch")] true "story")
+  (let [clj-tuple (tuple :i "have" 9 :small "hamsters"
+                         [:in "a cage" (tuple :on :the "porch")]
+                         true "story" nil)
         erl-tuple (OtpErlangTuple.
                    (into-array OtpErlangObject
                                [(OtpErlangAtom. "i")
@@ -31,7 +33,8 @@
                                                             (OtpErlangAtom. "the")
                                                             (OtpErlangString. "porch")]))]))
                                 (OtpErlangAtom. "true")
-                                (OtpErlangString. "story")]))]
+                                (OtpErlangString. "story")
+                                (OtpErlangAtom. "undefined")]))]
     (is (= (encode clj-tuple)
            erl-tuple))
     (is (= (decode erl-tuple)
