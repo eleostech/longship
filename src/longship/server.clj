@@ -39,12 +39,14 @@
       :shutdown nil
       (let [[pid message-type & vals] (:elements msg)]
         (try
-          (log/info "Received" message-type "message with params " vals "from" pid)
+          (log/info "Received" message-type "message with params" vals "from" pid)
           (! mbox pid (apply handle (cons message-type vals)))
           (catch Exception ex
+            (.printStackTrace ex)
             (try
               (! mbox pid (tuple :error (.getMessage ex)))
               (catch Exception ex
+                (.printStackTrace ex)
                 (log/error ex "Unable to send error tuple; ignoring message")))))
         (recur mbox)))))
 
