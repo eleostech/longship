@@ -39,11 +39,14 @@
       :shutdown nil
       (let [[pid message-type & vals] (:elements msg)]
         (try
-          (log/info "Received " message-type " message with params " vals)
+          (log/info "Received" message-type "message with params " vals "from" pid)
           (! mbox pid (apply handle (cons message-type vals)))
           (catch Exception ex
-            (! mbox pid (tuple :error (.getMessage ex)))))
-        (recur mbox)))))
+            (try
+              (! mbox pid (tuple :error (.getMessage ex)))
+              (catch Exception ex
+                (log/error ex "Unable to send error tuple; ignoring message"))))))
+      (recur mbox))))
 
 (defn start-server [node-name message-box-name cookie]
   (receive-loop (.createMbox (OtpNode. node-name cookie) message-box-name)))
